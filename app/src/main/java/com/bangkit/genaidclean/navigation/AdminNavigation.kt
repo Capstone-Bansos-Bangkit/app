@@ -31,6 +31,7 @@ import com.bangkit.genaidclean.ui.theme.whiteBlueLight
 fun AdminNavigation(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
+    actionLogOut: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -41,7 +42,10 @@ fun AdminNavigation(
             if (currentRoute != Screen.AdminDetailPengajuan.route ||
                 currentRoute != Screen.AdminDetailBansos.route
             ) {
-                BottomBarAdmin(navController = navController)
+                BottomBarAdmin(
+                    navController = navController,
+                    actionLogOut = actionLogOut
+                )
             }
         },
         floatingActionButton = {

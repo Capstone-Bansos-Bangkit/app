@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -39,6 +38,7 @@ import com.bangkit.genaidclean.ui.theme.white
 fun BottomBarAdmin(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    actionLogOut: () -> Unit = {}
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -66,7 +66,7 @@ fun BottomBarAdmin(
                 screen = Screen.AdminBansos
             ),
             NavigationItem(
-                title="Logout",
+                title = "Logout",
                 icon = Icons.Outlined.Logout,
                 screen = Screen.OnBoarding
             )
@@ -105,12 +105,16 @@ fun BottomBarAdmin(
                 ),
                 selected = currentRoute == item.screen.route,
                 onClick = {
-                    navController.navigate(item.screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                    if (navigationItems[3].title == "Logout") {
+                        actionLogOut()
+                    } else {
+                        navController.navigate(item.screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
                         }
-                        restoreState = true
-                        launchSingleTop = true
                     }
                 }
             )

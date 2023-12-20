@@ -3,6 +3,7 @@ package com.bangkit.genaidclean.ui
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bangkit.genaidclean.AdminActivityViewModel
 import com.bangkit.genaidclean.AuthViewModel
 import com.bangkit.genaidclean.MainViewModel
 import com.bangkit.genaidclean.data.di.Inject
@@ -26,6 +27,9 @@ class ViewModelFactory(private val repo : AppRepository) : ViewModelProvider.New
             }
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> {
                 AuthViewModel(repo) as T
+            }
+            modelClass.isAssignableFrom(AdminActivityViewModel::class.java) -> {
+                AdminActivityViewModel(repo) as T
             }
 
             // USER \\

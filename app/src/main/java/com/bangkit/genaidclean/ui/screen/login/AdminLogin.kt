@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Badge
 import androidx.compose.material.icons.rounded.Lock
@@ -44,6 +45,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -70,7 +73,6 @@ fun AdminLogin(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit = {},
     context:Context = LocalContext.current,
-    onNavigateToAdminActivity: () -> Unit = {},
     viewModel: AuthViewModel = viewModel(
         factory = ViewModelFactory(
             Inject.provideRepository(context)
@@ -95,7 +97,6 @@ fun AdminLogin(
 
             }
             is State.Success -> {
-                onNavigateToAdminActivity()
                 val intent = Intent(context, AdminActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 context.startActivity(intent)
@@ -205,6 +206,9 @@ fun AdminLogin(
                         focusedIndicatorColor = Color.Transparent,
                     ),
                     shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    )
                 )
             }
 
@@ -247,6 +251,10 @@ fun AdminLogin(
                         focusedIndicatorColor = Color.Transparent,
                     ),
                     shape = RoundedCornerShape(16.dp),
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                    )
                 )
             }
         }

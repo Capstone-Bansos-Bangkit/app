@@ -48,16 +48,7 @@ fun AuthNavigation(
         composable(Screen.AdminLogin.route){
             AdminLogin(
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToAdminActivity = {
-                    navController.navigate(Screen.AdminDashboard.route)
-                }
             )
-        }
-
-        composable(Screen.AdminDashboard.route){
-            val intent = Intent(context, AdminActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            context.startActivity(intent)
         }
     }
 }
