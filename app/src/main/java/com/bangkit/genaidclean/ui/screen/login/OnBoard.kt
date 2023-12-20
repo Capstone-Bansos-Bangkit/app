@@ -36,6 +36,7 @@ import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.yellow
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Preview(showSystemUi = true)
 @Composable
@@ -44,6 +45,13 @@ fun OnBoardScreen(
     onNavigateToUserLogin: () -> Unit = {},
     onNavigateToAdminLogin: () -> Unit = {},
 ) {
+
+    rememberSystemUiController().apply {
+        setSystemBarsColor(
+            color = whiteBlue
+        )
+    }
+
     Column(
         modifier = modifier
             .background(Color(whiteBlue.value))
@@ -150,7 +158,10 @@ fun OnBoardScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                colors = ButtonDefaults.buttonColors(Color(navy.value)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = navy,
+                    contentColor = whiteBlue
+                ),
                 contentPadding = PaddingValues(vertical = 12.dp),
 
                 ) {

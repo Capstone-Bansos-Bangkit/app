@@ -6,6 +6,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,13 +23,15 @@ import com.bangkit.genaidclean.ui.screen.user.home.UserHomeScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.AskPengajuanScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.UserPengajuanScreen
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileScreen
+import com.bangkit.genaidclean.ui.theme.whiteBlue
+import com.bangkit.genaidclean.ui.theme.whiteBlueLight
 
 
-//@Preview
+@Preview
 @Composable
 fun UserNavigation(
-    context: Context,
     modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
     navController: NavHostController = rememberNavController(),
 ) {
 
@@ -42,6 +46,7 @@ fun UserNavigation(
                 BottomBarUser(navController = navController)
             }
         },
+        containerColor = whiteBlueLight,
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -80,7 +85,6 @@ fun UserNavigation(
             }
             composable(Screen.UserPengajuan.route) {
                 UserPengajuanScreen(navController = navController)
-                //ContentPengajuan(navController)
 
             }
             composable(Screen.AskPengajuan.route) {

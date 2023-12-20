@@ -73,7 +73,8 @@ fun UserPengajuanScreen(
             BtnPengajuan(navController = navController, label = "PKH")
             BtnPengajuan(navController = navController, label = "PBIJK")
 
-            ItemPengajuan()
+            //TODO: syncronize with wahid work
+//            ItemPengajuan()
         }
     }
 }

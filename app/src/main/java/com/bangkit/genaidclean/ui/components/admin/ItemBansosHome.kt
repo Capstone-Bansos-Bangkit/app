@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkit.genaidclean.R
+import com.bangkit.genaidclean.data.remote.response.admin.PerBansosItem
 import com.bangkit.genaidclean.ui.theme.black
 import com.bangkit.genaidclean.ui.theme.black1
 import com.bangkit.genaidclean.ui.theme.grey
@@ -37,14 +38,15 @@ import com.bangkit.genaidclean.ui.theme.navyLight
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.yellow
 
-@Preview
+//@Preview
 @Composable
 fun ItemBansosHome(
 //    onClick: () -> Unit
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    item: PerBansosItem,
 ) {
     Card (
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = whiteBlue
         )
@@ -57,9 +59,9 @@ fun ItemBansosHome(
             horizontalAlignment = Alignment.Start,
         ){
             Text(
-                text = "Bantuan Pangan Non Tunai",
+                text = item.bansosName,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                     color = navy,
                 ),
@@ -81,21 +83,21 @@ fun ItemBansosHome(
             ) {
                 Column {
                     Text(
-                        text = "123.000",
+                        text = item.totalEligible.toString(),
                         style = TextStyle(
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                             color = navy,
                             letterSpacing = 0.96.sp,
                         ),
-                        modifier = modifier.height(18.dp),
+                        modifier = modifier.height(20.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
                         text = "penerima",
                         style = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             lineHeight = 8.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat)),
                             color = black1,
@@ -110,7 +112,7 @@ fun ItemBansosHome(
                         .size(24.dp)
                 ){
                     Text(
-                        text = "24",
+                        text = "1",
                         style = TextStyle(
                             fontSize = 12.sp,
                             lineHeight = 8.sp,
@@ -124,4 +126,15 @@ fun ItemBansosHome(
 
         }
     }
+}
+
+@Preview
+@Composable
+fun ItemBansosDashboard() {
+    ItemBansosHome(
+        item = PerBansosItem(
+            "Preview",
+            5
+        )
+    )
 }

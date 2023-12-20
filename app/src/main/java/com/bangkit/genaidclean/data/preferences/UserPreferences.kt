@@ -32,13 +32,6 @@ class UserPreferences private constructor(private val dataStore:DataStore<Prefer
                 role = preferences[ROLE_KEY] ?: "",
                 token = preferences[TOKEN_KEY] ?: "",
             )
-//            Result(
-//                token = preferences[TOKEN_KEY] ?: "",
-//                payload = Payload(
-//                    name = preferences[NAME_KEY] ?: "",
-//                    role = preferences[ROLE_KEY] ?: "",
-//                )
-//            )
         }
     }
 

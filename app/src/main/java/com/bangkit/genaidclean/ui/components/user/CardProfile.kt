@@ -1,6 +1,5 @@
 package com.bangkit.genaidclean.ui.components.user
 
-import android.R
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileViewModel
 import com.bangkit.genaidclean.ui.theme.black
 import com.bangkit.genaidclean.ui.theme.navy
@@ -57,7 +57,7 @@ fun ImageAdd(
 ) {
     Box {
 
-        val img: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.ic_menu_report_image)
+        val img: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), android.R.drawable.ic_menu_report_image)
         val bitmap = remember {
             mutableStateOf(img)
         }
@@ -122,7 +122,7 @@ fun ImageAdd(
                 .padding(top = 100.dp, start = 200.dp)
         ){
             Image(
-                painter = painterResource(id = R.drawable.baseline_photo_camera_24),
+                painter = painterResource(id = R.drawable.rounded_photo_camera_24),
                 contentDescription = null,
                 modifier = Modifier
                     .clip(CircleShape)
@@ -277,7 +277,7 @@ fun Email(
                         text = "Email",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
-                        color = colorResource(id = R.color.navy),
+                        color = navy,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

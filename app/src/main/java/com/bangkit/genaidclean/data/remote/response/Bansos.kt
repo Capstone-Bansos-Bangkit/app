@@ -1,5 +1,6 @@
 package com.bangkit.genaidclean.data.remote.response
 
+import com.bangkit.genaidclean.data.models.DataBansos
 import com.google.gson.annotations.SerializedName
 
 data class Bansos(
@@ -33,4 +34,14 @@ data class ResultItem(
 
     ) {
 
+    fun toDataBansos(): DataBansos {
+        return DataBansos(
+            logoUrl = logoUrl,
+            name = name,
+            description = description,
+            alias = alias,
+            totalPenerima = totalPenerima,
+            totalPeriode = totalPeriode,
+        )
+    }
 }

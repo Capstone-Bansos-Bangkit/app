@@ -18,17 +18,17 @@ import com.bangkit.genaidclean.ui.theme.navy
 @Composable
 fun SectionTitle(
     modifier: Modifier = Modifier,
-    title: String = "Lorem Ipsum Dolor Sit Amet"
+    title: String = "Section Title",
 ) {
     Text(
         text = title,
         style = TextStyle(
-            fontSize = 16.sp,
+            fontSize = 20.sp,
             fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
             color = navy,
         ),
         modifier = modifier
-            .width(200.dp)
+            .width(240.dp)
             .padding(vertical = 24.dp)
     )
 }

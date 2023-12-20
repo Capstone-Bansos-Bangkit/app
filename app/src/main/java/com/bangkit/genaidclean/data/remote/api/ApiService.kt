@@ -1,6 +1,9 @@
 package com.bangkit.genaidclean.data.remote.api
 
 import com.bangkit.genaidclean.data.remote.response.Bansos
+import com.bangkit.genaidclean.data.remote.response.admin.ResultItem
+import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
+import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
 import com.bangkit.genaidclean.data.remote.response.user.UserProfileResponse
@@ -8,24 +11,24 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface ApiService {
 
     //AUTH
-    @FormUrlEncoded
+
     @POST("login/admin")
     suspend fun loginAdmin(
-        @Field("username") username : String,
-        @Field("password") password : String
+        @Query("username") username : String,
+        @Query("password") password : String
     ): LoginResponse
 
-    @FormUrlEncoded
     @POST("login/user")
     suspend fun loginUser(
-        @Field("nik") nik: String,
-        @Field("mother_name") motherName: String,
-        @Field("birth_date")  birthDate: String,
+        @Query("nik") nik: String,
+        @Query("mother_name") motherName: String,
+        @Query("birth_date")  birthDate: String,
     ) : LoginResponse
 
 
@@ -47,6 +50,19 @@ interface ApiService {
 
 
     //ADMIN
+    @GET("admin/submission/summary")
+    suspend fun getSubmissionSummary(
+    ): SubmissionSummaryResponse
+
+    @GET("admin/submission/list")
+    suspend fun getApprovedSubmissionList(
+        @Query("status")status: String = "approved"
+    ): SubmissionListResponse
+
+    @GET("admin/submission/list")
+    suspend fun getPendingSubmissionList(
+        @Query("status")status: String = "pending",
+    ): SubmissionListResponse
 
 
 

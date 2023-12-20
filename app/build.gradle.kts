@@ -88,9 +88,14 @@ dependencies {
     //liveCycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.activity:activity-ktx:1.8.1")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 
+    //google icon
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation ("com.google.android.material:material:1.11.0")
 
+    //system ui controller
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

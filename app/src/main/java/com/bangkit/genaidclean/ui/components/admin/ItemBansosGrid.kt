@@ -32,14 +32,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bangkit.genaidclean.R
+import com.bangkit.genaidclean.data.remote.response.Bansos
+import com.bangkit.genaidclean.data.remote.response.ResultItem
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.navyLight
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 
-@Preview
+//@Preview
 @Composable
 fun ItemBansosGrid(
     modifier: Modifier = Modifier,
+    dataBansos: ResultItem,
+    onNavigateToDetailBansos: () -> Unit = {}
 ) {
     Card (
         shape = RoundedCornerShape(16.dp),
@@ -49,7 +53,7 @@ fun ItemBansosGrid(
         ),
         modifier = modifier
             .width(160.dp)
-            .clickable { } //TODO: navigate to detail
+            .clickable { onNavigateToDetailBansos() }
     ) {
         Column (
             modifier = modifier.padding(8.dp),
@@ -57,38 +61,39 @@ fun ItemBansosGrid(
             verticalArrangement = Arrangement.SpaceBetween,
         ){
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null,
-                modifier = modifier
-                    .size(144.dp)
-                    .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop
-            )
-
-//            AsyncImage(
-//                model = ImageRequest.Builder(context = LocalContext.current)
-//                    .data("")
-//                    .crossfade(true),
+//            Image(
+//                painter = painterResource(id = R.drawable.ic_launcher_background),
 //                contentDescription = null,
-//                placeholder = painterResource(id = R.drawable.iv_profile_placeholder ),
-//                contentScale = ContentScale.Crop,
 //                modifier = modifier
-//                    .size(width = 142.dp, height = 146.dp)
+//                    .size(144.dp)
+//                    .clip(RoundedCornerShape(16.dp)),
+//                contentScale = ContentScale.Crop
 //            )
 
+
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(dataBansos.logoUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                placeholder = painterResource(id = R.drawable.iv_profile_placeholder ),
+                contentScale = ContentScale.Fit,
+                modifier = modifier
+                    .size(width = 142.dp, height = 146.dp)
+            )
+
             Text(
-                text = "Bantuan Pangan Non Tunai",
+                text = dataBansos.alias,
                 style = TextStyle(
-                    fontSize = 13.sp,
+                    fontSize = 14.sp,
                     lineHeight = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                     color = navy,
                     textAlign = TextAlign.Center,
                 ),
                 modifier = modifier
-                    .padding(top=4.dp)
-                    .width(120.dp),
+                    .padding(vertical = 4.dp, horizontal = 8.dp),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )

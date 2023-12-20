@@ -22,13 +22,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkit.genaidclean.R
+import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 
-@Preview
+//@Preview
 @Composable
 fun Statistic(
     modifier: Modifier = Modifier,
+    dataResponse: SubmissionSummaryResponse,
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -44,9 +46,9 @@ fun Statistic(
 
                 text = "Total Pengajuan Bantuan",
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     lineHeight = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                     letterSpacing = 1.sp
                 )
             )
@@ -55,11 +57,10 @@ fun Statistic(
                 verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    //TODO: Change text
-                    text = "1.250.000",
+                    text = dataResponse.result.totalAll.toString(),
                     style = TextStyle(
                         fontSize = 36.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                        fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                         letterSpacing = 1.8.sp,
                     ),
                     maxLines = 1,
@@ -79,7 +80,7 @@ fun Statistic(
                 )
             }
 
-            Spacer(modifier = modifier.height(24.dp))
+            Spacer(modifier = modifier.height(40.dp))
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -90,34 +91,34 @@ fun Statistic(
                     Text(
                         text = "Eliglible",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat)),
                         )
                     )
                     Text(
-                        //TODO: Change text
-                        text = "1.050.000",
+                        text = dataResponse.result.totalEligible.toString(),
                         style = TextStyle(
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             lineHeight = 12.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                         ),
                         maxLines = 1,
                     )
                 }
-                Column {
+                Column (
+                    horizontalAlignment = Alignment.End
+                ){
                     Text(
                         text = "Non Eliglible",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat)),
                         )
                     )
                     Text(
-                        //TODO: Change text
-                        text = "1.050.000",
+                        text = dataResponse.result.totalNotEligible.toString(),
                         style = TextStyle(
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             lineHeight = 12.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                         ),

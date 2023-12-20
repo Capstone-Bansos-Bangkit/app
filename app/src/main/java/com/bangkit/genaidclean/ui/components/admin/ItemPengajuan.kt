@@ -34,16 +34,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkit.genaidclean.R
+import com.bangkit.genaidclean.data.models.DataSubmission
+import com.bangkit.genaidclean.data.remote.response.admin.ResultItem
 import com.bangkit.genaidclean.ui.theme.black
 import com.bangkit.genaidclean.ui.theme.black1
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.yellow
 
 
-@Preview
+//@Preview
 @Composable
 fun ItemPengajuan(
     modifier: Modifier = Modifier,
+    dataSubmission: ResultItem,
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -65,7 +68,7 @@ fun ItemPengajuan(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //TODO: replace with async image
+                //TODO: replace with async image :: data submission have no image
                 Image(
                     painter = painterResource(id = R.drawable.iv_profile_placeholder),
                     contentDescription = null,
@@ -81,8 +84,7 @@ fun ItemPengajuan(
                         .padding(vertical = 2.dp, horizontal = 12.dp)
                 ) {
                     Text(
-                        //TODO: ganti dengan data
-                        text = "BPNT",
+                        text = dataSubmission.bansosProviderName,
                         style = TextStyle(
                             fontSize = 8.sp,
                             lineHeight = 8.sp,
@@ -105,8 +107,7 @@ fun ItemPengajuan(
                 verticalArrangement = Arrangement.SpaceAround,
             ) {
                 Text(
-                    //TODO: ganti dengan data
-                    text = "330801300772809",
+                    text = dataSubmission.nik,
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 12.sp,
@@ -123,8 +124,7 @@ fun ItemPengajuan(
                 )
 
                 Text(
-                    //TODO: ganti dengan data
-                    text = "Ahmad Abdul Hariz",
+                    text = dataSubmission.name,
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 10.sp,
@@ -136,8 +136,7 @@ fun ItemPengajuan(
                 )
 
                 Text(
-                    //TODO: ganti dengan data
-                    text = "JL. Mulawarman No.3, 3 / 39 , Kali Segoro, Kec. Hilir, Kot. New York, Prov. Texas",
+                    text = "${dataSubmission.alamat}, ${dataSubmission.desa}, ${dataSubmission.kec}, ${dataSubmission.kab}, ${dataSubmission.prov}",
                     style = TextStyle(
                         fontSize = 10.sp,
                         lineHeight = 12.sp,

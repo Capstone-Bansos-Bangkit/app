@@ -11,6 +11,8 @@ import com.bangkit.genaidclean.navigation.AuthNavigation
 import com.bangkit.genaidclean.ui.theme.GenAidCleanTheme
 
 class AuthActivity : ComponentActivity() {
+    val context = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -20,7 +22,7 @@ class AuthActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AuthNavigation()
+                    AuthNavigation(context = this)
                 }
             }
         }
