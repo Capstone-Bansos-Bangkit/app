@@ -14,6 +14,9 @@ data class Bansos(
 
 data class ResultItem(
 
+    @field:SerializedName("bansos_provider_id")
+    val bansosProviderId: Int ,
+
     @field:SerializedName("logo_url")
     val logoUrl: String = "",
 

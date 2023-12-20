@@ -14,7 +14,9 @@ import com.bangkit.genaidclean.ui.screen.admin.verifikasi.VerifikasiViewModel
 import com.bangkit.genaidclean.ui.screen.user.cekbansos.CekBansosViewModel
 import com.bangkit.genaidclean.ui.screen.user.detailbansos.UserDetailBansosViewModel
 import com.bangkit.genaidclean.ui.screen.user.home.HomeViewModel
+import com.bangkit.genaidclean.ui.screen.user.pengajuan.UserPengajuanViewModel
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileViewModel
+import com.bangkit.genaidclean.ui.screen.user.question.QuestionViewModel
 
 class ViewModelFactory(private val repo : AppRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -44,6 +46,12 @@ class ViewModelFactory(private val repo : AppRepository) : ViewModelProvider.New
             }
             modelClass.isAssignableFrom(UserProfileViewModel::class.java) -> {
                 UserProfileViewModel(repo) as T
+            }
+            modelClass.isAssignableFrom(UserPengajuanViewModel::class.java) -> {
+                UserPengajuanViewModel(repo) as T
+            }
+            modelClass.isAssignableFrom(QuestionViewModel::class.java) -> {
+                QuestionViewModel(repo) as T
             }
 
             // ADMIN \\

@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.data.di.Inject
-import com.bangkit.genaidclean.data.models.DataSubmission
-import com.bangkit.genaidclean.data.remote.response.admin.ResultItem
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.ui.ViewModelFactory

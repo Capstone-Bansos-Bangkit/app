@@ -35,7 +35,8 @@ import com.bangkit.genaidclean.ui.theme.whiteBlueLight
 @Composable
 fun UserHomeScreen(
     context: Context,
-    navigateToDetailBansos: (String) -> Unit,
+    //TODO: NAVIGATE TO DETAIL BANSOS
+    navigateToDetailBansos: (Int) -> Unit,
     navController: NavHostController,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Inject.provideRepository(context = context)),
@@ -101,8 +102,9 @@ fun UserHomeScreen(
                     }
                 } else {
                     groupedBansos.forEach { (init, data) ->
-                        items(items = data, key = { it.name }) { data ->
+                        items(items = data, key = { it.bansosProviderId }) { data ->
                             ItemProfileBansos(
+                                id = data.bansosProviderId,
                                 name = data.name,
                                 photo = data.logoUrl,
                                 navigateToDetail = navigateToDetailBansos

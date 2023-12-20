@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.bangkit.genaidclean.data.di.Inject
+import com.bangkit.genaidclean.navigation.utils.Screen
 import com.bangkit.genaidclean.ui.ViewModelFactory
 import com.bangkit.genaidclean.ui.components.user.CardStatusUmur
 import com.bangkit.genaidclean.ui.components.user.ItemHasilCekBansos
@@ -45,13 +46,13 @@ fun CekBansosScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            IconButton(onClick = { navController.navigate("home")} ) {
+            IconButton(onClick = { navController.navigate(Screen.UserHome.route)} ) {
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowLeft,
                     contentDescription = null,
                     Modifier
                         .size(40.dp)
-                        .padding(top = 14.dp)
+                        .padding(top = 14.dp),
                 )
 
             }

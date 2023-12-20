@@ -12,6 +12,7 @@ import com.bangkit.genaidclean.data.remote.response.ResultItem
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
+import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusListItem
 import com.bangkit.genaidclean.data.remote.response.user.UserProfileResponse
@@ -95,8 +96,12 @@ class AppRepository private constructor(
     }
 
     //filter berdasar nama
-    suspend fun getPrfileBansosName(bansosName: String): List<ResultItem> {
-        return getAllProfBansos().filter { it.name == bansosName }
+    suspend fun getBansosById(bansosId: Int): List<ResultItem> {
+        return getAllProfBansos().filter { it.bansosProviderId == bansosId  }
+    }
+
+    suspend fun getQuestions(): QuestionResponse {
+        return apiService.getQuestions()
     }
 
 
@@ -146,6 +151,10 @@ class AppRepository private constructor(
                 emit(Bansos(message = "Error Getting Bansos from the API", result = emptyList()))
             }
         }
+    }
+
+    suspend fun getBansosDetail(id: Int): ResultItem{
+        return getAllProfBansos().filter { it.bansosProviderId == id }.first()
     }
 
 

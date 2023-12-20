@@ -40,11 +40,12 @@ import com.bangkit.genaidclean.data.remote.response.ResultItem
 import com.bangkit.genaidclean.ui.ViewModelFactory
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.bangkit.genaidclean.navigation.utils.Screen
 
 //@Preview
 @Composable
 fun UserDetailBansosScreen(
-    name: String = "",
+    bansosId: Int,
     context: Context,
     navController: NavHostController,
 ) {
@@ -55,9 +56,9 @@ fun UserDetailBansosScreen(
     )
     var bansosState by remember { mutableStateOf<List<ResultItem>>(emptyList()) }
 
-    LaunchedEffect(name) {
+    LaunchedEffect(bansosId) {
         // Menggunakan viewModel untuk mendapatkan data produk berdasarkan ID
-        bansosState = viewModel.getBansosById(name)
+        bansosState = viewModel.getBansosById(bansosId)
     }
 
     bansosState.forEach { selectedBansos ->
@@ -88,7 +89,7 @@ fun ContentDetailProfileBansos(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            IconButton(onClick = { navController.navigate("home") }) {
+            IconButton(onClick = { navController.navigate(Screen.UserHome.route) }) {
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowLeft,
                     contentDescription = null,

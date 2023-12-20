@@ -40,7 +40,7 @@ fun BansosScreen(
             Inject.provideRepository(context)
         )
     ),
-    onNavigateToDetailbansos : () -> Unit = {}
+    onNavigateToDetailbansos : (Int) -> Unit = {}
 ) {
 
     val dataState by viewModel.state.collectAsState()
@@ -77,7 +77,7 @@ fun BansosScreen(
 @Composable
 fun BansosScreenContent(
     modifier: Modifier = Modifier,
-    onNavigateToDetailbansos: () -> Unit,
+    onNavigateToDetailbansos: (Int) -> Unit,
     databansos: Bansos,
 ) {
     Column(

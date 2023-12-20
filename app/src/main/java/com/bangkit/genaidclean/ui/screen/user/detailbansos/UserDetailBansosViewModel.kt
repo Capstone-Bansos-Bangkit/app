@@ -16,8 +16,8 @@ class UserDetailBansosViewModel ( private val repo: AppRepository): ViewModel() 
     val result: StateFlow<State<ResultItem>>
         get() = _result
 
-    suspend fun getBansosById(bansosName: String): List<ResultItem> {
-        return repo.getPrfileBansosName(bansosName)
+    suspend fun getBansosById(bansosId: Int): List<ResultItem> {
+        return repo.getBansosById(bansosId)
     }
 
 }

@@ -76,11 +76,11 @@ fun UserProfileScreen(
 
             Button(
                 onClick = {
-                    val intent = Intent(context, AuthActivity::class.java)
-                    intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    context.startActivity(intent)
-//                    Utils.setLoginStatus(context, false)
+//                    val intent = Intent(context, AuthActivity::class.java)
+//                    intent.flags =
+//                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    context.startActivity(intent)
+////                    Utils.setLoginStatus(context, false)
                     viewModel.logout()
 
                 },

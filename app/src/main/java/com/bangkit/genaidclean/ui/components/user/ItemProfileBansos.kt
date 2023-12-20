@@ -26,10 +26,11 @@ import com.bangkit.genaidclean.ui.theme.black
 
 @Composable
 fun ItemProfileBansos(
+    id: Int,
     name: String,
     photo: String,
     modifier: Modifier = Modifier,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (Int) -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -39,7 +40,7 @@ fun ItemProfileBansos(
         modifier = modifier
             .padding(10.dp)
             .wrapContentSize()
-            .clickable { navigateToDetail(name) }
+            .clickable { navigateToDetail(id) }
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(5.dp),

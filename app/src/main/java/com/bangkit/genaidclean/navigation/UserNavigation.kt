@@ -23,8 +23,10 @@ import com.bangkit.genaidclean.ui.screen.user.home.UserHomeScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.AskPengajuanScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.UserPengajuanScreen
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileScreen
+import com.bangkit.genaidclean.ui.screen.user.question.Question
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.whiteBlueLight
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Preview
@@ -38,9 +40,13 @@ fun UserNavigation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    rememberSystemUiController().apply {
+        setSystemBarsColor(color = whiteBlueLight)
+    }
+
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.CekBansos.route
+            if (currentRoute != Screen.Question.route && currentRoute != Screen.CekBansos.route
                 && currentRoute != Screen.UserDetailBansos.route
             ) {
                 BottomBarUser(navController = navController)
@@ -57,8 +63,8 @@ fun UserNavigation(
                 UserHomeScreen(
                     context = context,
                     navController = navController,
-                    navigateToDetailBansos = {name ->
-                        navController.navigate(Screen.UserDetailBansos.createRoute(name))
+                    navigateToDetailBansos = {bansosId ->
+                        navController.navigate(Screen.UserDetailBansos.createRoute(bansosId))
                     }
                 )
             }
@@ -66,12 +72,12 @@ fun UserNavigation(
             composable(
                 route = Screen.UserDetailBansos.route,
                 arguments = listOf(
-                    navArgument("name") { type = NavType.StringType }
+                    navArgument("id") { type = NavType.IntType }
                 )
             ){
-                val name = it.arguments?.getString("name") ?: ""
+                val id = it.arguments?.getInt("id") ?: 0
                 UserDetailBansosScreen(
-                    name = name,
+                    bansosId = id,
                     context = context,
                     navController = navController
                 )
@@ -84,11 +90,23 @@ fun UserNavigation(
                 )
             }
             composable(Screen.UserPengajuan.route) {
-                UserPengajuanScreen(navController = navController)
+                UserPengajuanScreen(
+                    context = context,
+                    navigateToQuestion = { id ->
+                        navController.navigate(Screen.Question.createRoute(id))
+                    },
+                    navController = navController
+                )
 
             }
-            composable(Screen.AskPengajuan.route) {
-                AskPengajuanScreen(navController = navController)
+            composable(
+                route = Screen.Question.route,
+                arguments = listOf(
+                    navArgument("id") { type = NavType.IntType }
+                )
+            ) {
+                val id = it.arguments?.getInt("id") ?: 1
+                Question(Id = id, navController = navController, context = context)
 
             }
             composable(Screen.UserProfil.route) {

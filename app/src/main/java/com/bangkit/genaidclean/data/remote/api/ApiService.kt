@@ -5,6 +5,7 @@ import com.bangkit.genaidclean.data.remote.response.admin.ResultItem
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
+import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
 import com.bangkit.genaidclean.data.remote.response.user.UserProfileResponse
 import retrofit2.http.Field
@@ -46,6 +47,10 @@ interface ApiService {
     @GET("submission/latest_status")
     suspend fun getStatusName(
     ): StatusBansosResponse
+
+    @GET("questioner")
+    suspend fun getQuestions(
+    ): QuestionResponse
 
 
 

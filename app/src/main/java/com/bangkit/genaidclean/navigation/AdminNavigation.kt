@@ -24,7 +24,9 @@ import com.bangkit.genaidclean.ui.screen.admin.bansos.BansosScreen
 import com.bangkit.genaidclean.ui.screen.admin.bansos.DetailBansos
 import com.bangkit.genaidclean.ui.screen.admin.dashboard.DashboardAdminScreen
 import com.bangkit.genaidclean.ui.screen.admin.verifikasi.VerifikasiScreen
+import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.whiteBlueLight
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Preview
 @Composable
@@ -37,9 +39,15 @@ fun AdminNavigation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    val containerColor = whiteBlueLight
+
+    rememberSystemUiController().apply {
+        setStatusBarColor(containerColor)
+    }
+
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.AdminDetailPengajuan.route ||
+            if (currentRoute != Screen.AdminDetailPengajuan.route &&
                 currentRoute != Screen.AdminDetailBansos.route
             ) {
                 BottomBarAdmin(
@@ -53,7 +61,7 @@ fun AdminNavigation(
                 FabFilter()
             }
         },
-        containerColor = whiteBlueLight,
+        containerColor = containerColor,
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -70,8 +78,8 @@ fun AdminNavigation(
 
             composable(Screen.AdminBansos.route) {
                 BansosScreen(
-                    onNavigateToDetailbansos = {
-                        navController.navigate(Screen.AdminDetailBansos.route)
+                    onNavigateToDetailbansos = {bansosId ->
+                        navController.navigate(Screen.AdminDetailBansos.createRoute(bansosId))
                     }
                 )
             }
@@ -79,12 +87,15 @@ fun AdminNavigation(
             composable(
                 route = Screen.AdminDetailBansos.route,
                 arguments = listOf(
-                    navArgument("id") { type = NavType.StringType }
+                    navArgument("id") { type = NavType.IntType }
                 )
             ) {
-                val id = it.arguments?.getString("id") ?: ""
+                val id = it.arguments?.getInt("id") ?: 0
                 DetailBansos(
-                    // dan pritilannya
+                    bansosId = id,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    }
                 )
             }
 

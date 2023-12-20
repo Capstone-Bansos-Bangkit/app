@@ -222,8 +222,6 @@ fun CardStatusBansos(
     ) {
         items(statusListBansos) { statusListItem ->
             statusListItem?.let { item ->
-                // Display each StatusListItem in the grid
-                // Tambahkan padding di sekitar elemen-elemen UI untuk meningkatkan estetika
                 Column(
                     modifier = Modifier
                         .padding(8.dp)
@@ -237,9 +235,6 @@ fun CardStatusBansos(
                         modifier = Modifier.padding(4.dp)
                     )
 
-                    // ...
-
-                    // Gunakan Column untuk menyusun elemen-elemen UI secara vertikal
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
