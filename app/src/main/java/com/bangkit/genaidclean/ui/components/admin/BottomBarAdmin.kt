@@ -105,7 +105,7 @@ fun BottomBarAdmin(
                 ),
                 selected = currentRoute == item.screen.route,
                 onClick = {
-                    if (navigationItems[3].title == "Logout") {
+                    if (item.title == "Logout") {
                         actionLogOut()
                     } else {
                         navController.navigate(item.screen.route) {
