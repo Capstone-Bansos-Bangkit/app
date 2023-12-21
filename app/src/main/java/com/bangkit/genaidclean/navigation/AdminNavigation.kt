@@ -91,7 +91,7 @@ fun AdminNavigation(
                 DetailAjuan(
                     submissionId = id,
                     onNavigateBack = {
-                        navController.navigateUp()
+                        navController.popBackStack(Screen.AdminVerifikasi.route, inclusive = false)
                     },
                 )
             }

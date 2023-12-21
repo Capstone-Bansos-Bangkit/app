@@ -12,20 +12,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val repo: AppRepository): ViewModel() {
+class AuthViewModel(private val repo: AppRepository) : ViewModel() {
 
     private val _loginResult = MutableStateFlow<State<UserModel>>(State.Loading)
     val loginResult: StateFlow<State<UserModel>> = _loginResult.asStateFlow()
 
-    fun loginUser(
-        nik: String,
-        motherName: String,
-        birthDate: String
-    ) {
+    fun loginDev() {
         viewModelScope.launch {
-            repo.loginUser(nik, motherName, birthDate)
-                .collect{result ->
-                    when(result) {
+            repo.loginDev()
+                .collect { result ->
+                    when (result) {
                         is State.Loading -> {
                             _loginResult.value = State.Loading
                         }
@@ -33,6 +29,33 @@ class AuthViewModel(private val repo: AppRepository): ViewModel() {
                             _loginResult.value = State.Success(result.data)
                             saveSession(result.data)
                         }
+
+                        is State.Error -> {
+                            _loginResult.value = State.Error(result.error)
+                        }
+                    }
+                }
+        }
+    }
+
+    fun loginUser(
+        nik: String,
+        motherName: String,
+        birthDate: String,
+    ) {
+        viewModelScope.launch {
+            repo.loginUser(nik, motherName, birthDate)
+                .collect { result ->
+                    when (result) {
+                        is State.Loading -> {
+                            _loginResult.value = State.Loading
+                        }
+
+                        is State.Success -> {
+                            _loginResult.value = State.Success(result.data)
+                            saveSession(result.data)
+                        }
+
                         is State.Error -> {
                             _loginResult.value = State.Error(result.error)
                         }
@@ -47,15 +70,17 @@ class AuthViewModel(private val repo: AppRepository): ViewModel() {
     ) {
         viewModelScope.launch {
             repo.loginAdmin(username, password)
-                .collect {result ->
+                .collect { result ->
                     when (result) {
                         is State.Loading -> {
                             _loginResult.value = State.Loading
                         }
+
                         is State.Success -> {
                             _loginResult.value = State.Success(result.data)
                             saveSession(result.data)
                         }
+
                         is State.Error -> {
                             _loginResult.value = State.Error(result.error)
                         }

@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -54,7 +52,6 @@ import com.bangkit.genaidclean.data.di.Inject
 import com.bangkit.genaidclean.data.preferences.UserModel
 import com.bangkit.genaidclean.ui.ViewModelFactory
 import com.bangkit.genaidclean.ui.components.ButtonBack
-import com.bangkit.genaidclean.ui.components.TextInput
 import com.bangkit.genaidclean.ui.theme.black1
 import com.bangkit.genaidclean.ui.theme.grey
 import com.bangkit.genaidclean.ui.theme.navy
@@ -74,7 +71,7 @@ fun UserLogin(
         factory = ViewModelFactory(
             Inject.provideRepository(context)
         )
-    )
+    ),
 ) {
 
     rememberSystemUiController().apply {
@@ -89,18 +86,27 @@ fun UserLogin(
     var motherName by rememberSaveable { mutableStateOf("") }
     var birthDate by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(loginResult){
-        when(loginResult.value){
+    LaunchedEffect(loginResult) {
+        when (loginResult.value) {
             is State.Loading -> {}
             is State.Success -> {
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 context.startActivity(intent)
-                Toast.makeText(context, "Login Success. Welcome ${(loginResult.value as State.Success<UserModel>).data.name}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Login Success. Welcome ${(loginResult.value as State.Success<UserModel>).data.name}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             is State.Error -> {
 
-                Toast.makeText(context, (loginResult.value as State.Error).error, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    (loginResult.value as State.Error).error,
+                    Toast.LENGTH_SHORT
+                ).show()
                 (loginResult.value as State.Error).error?.let { Log.d("UserLogin", it) }
             }
         }
@@ -153,9 +159,9 @@ fun UserLogin(
             modifier = modifier.padding(bottom = 120.dp)
         ) {
 
-            Column (
+            Column(
                 modifier = modifier.padding(vertical = 16.dp)
-            ){
+            ) {
                 Text(
                     text = "NIK",
                     style = TextStyle(
@@ -170,7 +176,7 @@ fun UserLogin(
 
                 OutlinedTextField(
                     value = nik,
-                    onValueChange = {nik = it} ,
+                    onValueChange = { nik = it },
                     modifier = modifier.fillMaxWidth(),
                     singleLine = true,
                     leadingIcon = {
@@ -199,9 +205,9 @@ fun UserLogin(
                 )
             }
 
-            Column (
+            Column(
                 modifier = modifier.padding(vertical = 16.dp)
-            ){
+            ) {
                 Text(
                     text = "Nama Ibu kandung",
                     style = TextStyle(
@@ -216,7 +222,7 @@ fun UserLogin(
 
                 OutlinedTextField(
                     value = motherName,
-                    onValueChange = {motherName = it} ,
+                    onValueChange = { motherName = it },
                     modifier = modifier.fillMaxWidth(),
                     singleLine = true,
                     leadingIcon = {
@@ -249,9 +255,9 @@ fun UserLogin(
                 )
             }
 
-            Column (
+            Column(
                 modifier = modifier.padding(vertical = 16.dp)
-            ){
+            ) {
                 Text(
                     text = "Tanggal Lahir",
                     style = TextStyle(
@@ -266,7 +272,7 @@ fun UserLogin(
 
                 OutlinedTextField(
                     value = birthDate,
-                    onValueChange = {birthDate = it} ,
+                    onValueChange = { birthDate = it },
                     modifier = modifier.fillMaxWidth(),
                     singleLine = true,
                     leadingIcon = {
@@ -308,7 +314,11 @@ fun UserLogin(
             contentAlignment = Alignment.BottomCenter
         ) {
             Button(
-                onClick = { viewModel.loginUser(nik, motherName, birthDate) },
+                onClick = {
+                    viewModel.loginDev()
+                    //TODO: THIS IS SUDO, CHANGE WHEN U WANT TO DEPLOY IT
+//                    viewModel.loginUser(nik, motherName, birthDate)
+                },
                 modifier = modifier
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(Color(navy.value)),

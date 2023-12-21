@@ -9,6 +9,7 @@ import com.bangkit.genaidclean.data.remote.response.admin.VerifySubmissionRespon
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
 import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
+import com.bangkit.genaidclean.data.remote.response.user.UpdateProfileResponse
 import com.bangkit.genaidclean.data.remote.response.user.UserProfileResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -21,6 +22,8 @@ import retrofit2.http.Query
 interface ApiService {
 
     //AUTH
+    @POST("login/dev_user")
+    suspend fun loginDevUser() : LoginResponse
 
     @POST("login/admin")
     suspend fun loginAdmin(
@@ -54,6 +57,16 @@ interface ApiService {
     @GET("questioner")
     suspend fun getQuestions(
     ): QuestionResponse
+
+    @PUT("user/profile")
+    suspend fun updateEmail(
+        @Query("email") email: String
+    ):UpdateProfileResponse
+
+    @PUT("user/profile")
+    suspend fun updatePhone(
+        @Query("phone_number") phoneNumber: String
+    ):UpdateProfileResponse
 
 
 

@@ -1,11 +1,8 @@
 package com.bangkit.genaidclean.ui.components
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
@@ -14,10 +11,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.bangkit.genaidclean.R
-import com.bangkit.genaidclean.ui.theme.black
 import com.bangkit.genaidclean.ui.theme.black1
-import com.bangkit.genaidclean.ui.theme.black2
-import com.bangkit.genaidclean.ui.theme.grey
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.navyLight
 import com.bangkit.genaidclean.ui.theme.whiteBlue
