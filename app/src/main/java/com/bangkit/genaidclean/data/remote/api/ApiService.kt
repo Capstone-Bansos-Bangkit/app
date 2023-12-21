@@ -82,11 +82,10 @@ interface ApiService {
 
 
     // approve/disapprove submission
-    @FormUrlEncoded
     @PUT("admin/submission/approve")
     suspend fun verifySubmission(
-        @Field("user_submission_id")submissionId: Int,
-        @Field("status")status: String
+        @Query("user_submission_id")submissionId: Int,
+        @Query("status")status: String
     ):VerifySubmissionResponse
 
 }

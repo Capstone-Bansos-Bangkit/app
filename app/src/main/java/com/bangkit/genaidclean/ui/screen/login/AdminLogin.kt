@@ -1,7 +1,6 @@
 package com.bangkit.genaidclean.ui.screen.login
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -22,18 +21,16 @@ import androidx.compose.material.icons.rounded.Badge
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,15 +49,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bangkit.genaidclean.AdminActivity
 import com.bangkit.genaidclean.AuthViewModel
 import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.data.di.Inject
 import com.bangkit.genaidclean.data.preferences.UserModel
 import com.bangkit.genaidclean.ui.ViewModelFactory
+import com.bangkit.genaidclean.ui.components.AlertAutoClose
 import com.bangkit.genaidclean.ui.components.ButtonBack
-import com.bangkit.genaidclean.ui.components.TextInput
-import com.bangkit.genaidclean.ui.screen.admin.dashboard.DashboardAdminViewModel
+import com.bangkit.genaidclean.ui.components.LoadingBox
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.navyLight
 import com.bangkit.genaidclean.ui.theme.whiteBlueLight
@@ -72,7 +68,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun AdminLogin(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit = {},
-    context:Context = LocalContext.current,
+    context: Context = LocalContext.current,
     viewModel: AuthViewModel = viewModel(
         factory = ViewModelFactory(
             Inject.provideRepository(context)
@@ -91,24 +87,28 @@ fun AdminLogin(
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(loginResult) {
-        when(loginResult.value) {
-            is State.Loading -> {
+    when (loginResult.value) {
+        is State.Loading -> {
+            LoadingBox()
+        }
+        is State.Success -> {
+            AlertAutoClose(
+                msg = "Login Success",
+            )
+            Toast.makeText(
+                context,
+                "Login Success. Welcome ${(loginResult.value as State.Success<UserModel>).data.name}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
-            }
-            is State.Success -> {
-                val intent = Intent(context, AdminActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                context.startActivity(intent)
-                Toast.makeText(context, "Login Success. Welcome ${(loginResult.value as State.Success<UserModel>).data.name}", Toast.LENGTH_SHORT).show()
-            }
-            is State.Error -> {
-
-                Toast.makeText(context, (loginResult.value as State.Error).error, Toast.LENGTH_SHORT).show()
-                (loginResult.value as State.Error).error?.let { Log.d("AdminLogin", it) }
-            }
+        is State.Error -> {
+            Toast.makeText(context, (loginResult.value as State.Error).error, Toast.LENGTH_SHORT)
+                .show()
+            (loginResult.value as State.Error).error?.let { Log.d("AdminLogin", it) }
         }
     }
+
 
     Column(
         modifier = modifier
@@ -167,9 +167,9 @@ fun AdminLogin(
         Column(
         ) {
 
-            Column (
+            Column(
                 modifier = modifier.padding(vertical = 16.dp)
-            ){
+            ) {
                 Text(
                     text = "Username",
                     style = TextStyle(
@@ -184,7 +184,7 @@ fun AdminLogin(
 
                 OutlinedTextField(
                     value = username,
-                    onValueChange = {username = it} ,
+                    onValueChange = { username = it },
                     modifier = modifier.fillMaxWidth(),
                     singleLine = true,
                     leadingIcon = {
@@ -212,9 +212,9 @@ fun AdminLogin(
                 )
             }
 
-            Column (
+            Column(
                 modifier = modifier.padding(vertical = 16.dp)
-            ){
+            ) {
                 Text(
                     text = "Password",
                     style = TextStyle(
@@ -229,7 +229,7 @@ fun AdminLogin(
 
                 OutlinedTextField(
                     value = password,
-                    onValueChange = {password = it} ,
+                    onValueChange = { password = it },
                     modifier = modifier.fillMaxWidth(),
                     singleLine = true,
                     leadingIcon = {

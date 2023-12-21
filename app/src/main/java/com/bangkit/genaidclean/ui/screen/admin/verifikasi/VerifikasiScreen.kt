@@ -37,10 +37,8 @@ import com.bangkit.genaidclean.data.di.Inject
 import com.bangkit.genaidclean.data.remote.response.admin.ResultItem
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.ui.ViewModelFactory
-import com.bangkit.genaidclean.ui.components.admin.FabFilter
 import com.bangkit.genaidclean.ui.components.admin.ItemPengajuan
 import com.bangkit.genaidclean.ui.components.admin.SectionTitle
-import com.bangkit.genaidclean.ui.screen.admin.dashboard.DashboardAdminViewModel
 import com.bangkit.genaidclean.ui.screen.admin.state.ErrorScreen
 import com.bangkit.genaidclean.ui.screen.admin.state.LoadingScreen
 import com.bangkit.genaidclean.ui.theme.black1

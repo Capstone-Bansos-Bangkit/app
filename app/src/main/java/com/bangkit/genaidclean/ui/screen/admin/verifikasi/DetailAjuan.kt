@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -26,11 +25,13 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,7 +43,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -55,7 +55,9 @@ import com.bangkit.genaidclean.data.remote.response.admin.DetailSubmissionResult
 import com.bangkit.genaidclean.data.remote.response.admin.QuestionerResultItem
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionDetailResponse
 import com.bangkit.genaidclean.ui.ViewModelFactory
+import com.bangkit.genaidclean.ui.components.AlertAutoClose
 import com.bangkit.genaidclean.ui.components.ButtonBack
+import com.bangkit.genaidclean.ui.components.CustomAlertDialog
 import com.bangkit.genaidclean.ui.components.admin.SectionTitle
 import com.bangkit.genaidclean.ui.screen.admin.state.ErrorScreen
 import com.bangkit.genaidclean.ui.screen.admin.state.LoadingScreen
@@ -73,56 +75,61 @@ import com.bangkit.genaidclean.utils.State
 fun DetailAjuan(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
-    viewModel: VerifikasiViewModel= viewModel(
+    viewModel: VerifikasiViewModel = viewModel(
         factory = ViewModelFactory(
             Inject.provideRepository(context)
         )
     ),
     submissionId: Int,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
 ) {
     val result by viewModel.detailSubmis.collectAsState()
 
     val resultVerif by viewModel.verifSubmis.collectAsState()
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         viewModel.getDetailSubmission(submissionId)
     }
 
-    when(result){
+    when (result) {
         is State.Loading -> {
             LoadingScreen(modifier = modifier.fillMaxSize())
         }
+
         is State.Success -> {
             DetailAjuanContent(
                 idSubmission = submissionId,
                 modifier = modifier,
                 dataPengajuan = (result as State.Success<SubmissionDetailResponse>).data.result,
                 updateSubmissionStatus = { id, status -> viewModel.verifSubmission(id, status) },
-                onNavigateBack = onNavigateBack
+                onNavigateBack = onNavigateBack,
             )
         }
+
         is State.Error -> {
             (result as State.Error).error?.let {
                 ErrorScreen(
                     error = it,
-                    retryAction = {viewModel.getDetailSubmission(submissionId)}
+                    retryAction = { viewModel.getDetailSubmission(submissionId) }
                 )
             }
         }
     }
 
-    when(resultVerif){
+
+    when (resultVerif) {
         is State.Loading -> {} // loading dialog
         is State.Success -> {
-//            onNavigateBack()
+            AlertAutoClose(
+                msg = "Berhasil",
+            )
+            onNavigateBack()
         }
-        is State.Error -> {}
-    }
-
-
-    fun updateSubmissionStatus(id: Int, status: String){
-        viewModel.verifSubmission(id, status)
+        is State.Error -> {
+            (resultVerif as State.Error).error?.let {
+                AlertAutoClose(msg = it)
+            }
+        }
     }
 }
 
@@ -132,10 +139,16 @@ fun DetailAjuanContent(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     dataPengajuan: DetailSubmissionResult,
-    updateSubmissionStatus : (Int, String) -> Unit,
-    idSubmission: Int
+    updateSubmissionStatus: (Int, String) -> Unit,
+    idSubmission: Int,
 ) {
+
     val scrollState = rememberScrollState()
+
+    var show by remember {
+        mutableStateOf(false)
+    }
+    var status by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -149,10 +162,10 @@ fun DetailAjuanContent(
             )
     ) {
 
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
-        ){
+        ) {
             ButtonBack(
                 onClick = { onNavigateBack() },
                 containerTint = IconButtonDefaults.iconButtonColors(
@@ -203,7 +216,7 @@ fun DetailAjuanContent(
             )
 
             Image(
-                painter = if (dataPengajuan.mlResult == "eligible"){
+                painter = if (dataPengajuan.mlResult == "eligible") {
                     painterResource(id = R.drawable.eliglible_icon)
                 } else {
                     painterResource(id = R.drawable.non_eliglible_icon)
@@ -220,7 +233,7 @@ fun DetailAjuanContent(
 
         SectionSubtitle(title = "Kuisioner")
         CardQuestionerResult(
-             questionerResult = dataPengajuan.questionerResult
+            questionerResult = dataPengajuan.questionerResult
         )
         Spacer(modifier = modifier.height(24.dp))
 
@@ -233,8 +246,12 @@ fun DetailAjuanContent(
         Row(
             modifier = modifier.padding(vertical = 16.dp)
         ) {
+
             OutlinedButton(
-                onClick = { updateSubmissionStatus(idSubmission,"rejected") },
+                onClick = {
+                    show = true
+                    status = "tolak"
+                },
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = navy,
                 ),
@@ -253,7 +270,10 @@ fun DetailAjuanContent(
             Spacer(modifier = modifier.width(16.dp))
 
             Button(
-                onClick = { updateSubmissionStatus(idSubmission,"approved") },
+                onClick = {
+                    show = true
+                    status = "approved"
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = navy,
                 ),
@@ -271,7 +291,22 @@ fun DetailAjuanContent(
             }
         }
 
-
+        //tambahan disni bos
+        if (show && status == "tolak") {
+            CustomAlertDialog(
+                onDismiss = { show = false },
+                onConfirm = { updateSubmissionStatus(idSubmission, "rejected") },
+                titleDialog = "Tolak Ajuan",
+                msgDialog = "Apakah anda yakin ingin menolak ajuan ini?",
+            )
+        } else if ( show && status == "approved") {
+            CustomAlertDialog(
+                onDismiss = { show = false },
+                onConfirm = { updateSubmissionStatus(idSubmission, "approved") },
+                titleDialog = "Verifikasi Ajuan",
+                msgDialog = "Apakah anda yakin ingin menyetujui ajuan ini?",
+            )
+        }
     }
 }
 
@@ -397,7 +432,7 @@ fun SectionSubtitle(
 fun FieldData(
     modifier: Modifier = Modifier,
     title: String,
-    value: String
+    value: String,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -432,7 +467,7 @@ fun FieldData(
 @Composable
 fun CardQuestionerResult(
     modifier: Modifier = Modifier,
-    questionerResult: List<QuestionerResultItem>
+    questionerResult: List<QuestionerResultItem>,
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -493,7 +528,7 @@ fun DataQuestionResult(
 @Composable
 fun CardLampiran(
     modifier: Modifier = Modifier,
-    lampiran: List<AttachmentResultItem>
+    lampiran: List<AttachmentResultItem>,
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -516,11 +551,11 @@ fun CardLampiran(
 fun DataLampiran(
     modifier: Modifier = Modifier,
     question: String,
-    src: String
+    src: String,
 ) {
-    Column (
+    Column(
         modifier = modifier.padding(16.dp)
-    ){
+    ) {
         Text(
             text = question,
             style = TextStyle(
