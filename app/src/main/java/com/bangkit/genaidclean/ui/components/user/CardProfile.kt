@@ -1,5 +1,6 @@
 package com.bangkit.genaidclean.ui.components.user
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -42,9 +43,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.bangkit.genaidclean.R
+import com.bangkit.genaidclean.data.di.Inject
+import com.bangkit.genaidclean.ui.ViewModelFactory
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileViewModel
 import com.bangkit.genaidclean.ui.theme.black
 import com.bangkit.genaidclean.ui.theme.navy
@@ -53,7 +57,10 @@ import com.bangkit.genaidclean.ui.theme.whiteBlue
 
 @Composable
 fun ImageAdd(
-    viewModel : UserProfileViewModel
+    context : Context,
+    viewModel: UserProfileViewModel = viewModel(
+        factory = ViewModelFactory(Inject.provideRepository(context = context )),
+    )
 ) {
     Box {
 

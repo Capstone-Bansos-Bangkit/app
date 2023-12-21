@@ -41,3 +41,21 @@ fun BtnCekBansos(
     }
 
 }
+
+@Composable
+fun BtnCoba(navController: NavHostController) {
+    Button(
+        onClick = {navController.navigate("coba") },
+        contentPadding = PaddingValues(20.dp, 12.dp, 20.dp, 12.dp),
+        colors = ButtonDefaults.buttonColors(navy),
+    ) {
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = null,
+            modifier= Modifier.size(ButtonDefaults.IconSize),)
+        Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+        Text(text = stringResource(id = R.string.cekbansos))
+
+    }
+
+}

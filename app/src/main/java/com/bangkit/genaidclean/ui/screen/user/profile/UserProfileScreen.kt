@@ -69,7 +69,7 @@ fun UserProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ){
 
-            ImageAdd(viewModel)
+            ImageAdd(viewModel = viewModel, context = context)
             Info(navController = navController, viewModel = viewModel)
             Email(navController = navController, viewModel = viewModel)
             NoTlp(navController = navController, viewModel = viewModel)
