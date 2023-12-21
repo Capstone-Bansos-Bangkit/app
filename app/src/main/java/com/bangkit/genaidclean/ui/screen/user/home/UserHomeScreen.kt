@@ -35,7 +35,6 @@ import com.bangkit.genaidclean.ui.theme.whiteBlueLight
 @Composable
 fun UserHomeScreen(
     context: Context,
-    //TODO: NAVIGATE TO DETAIL BANSOS
     navigateToDetailBansos: (Int) -> Unit,
     navController: NavHostController,
     viewModel: HomeViewModel = viewModel(

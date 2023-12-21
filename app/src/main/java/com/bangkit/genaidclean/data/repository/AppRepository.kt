@@ -9,8 +9,10 @@ import com.bangkit.genaidclean.data.preferences.UserPreferences
 import com.bangkit.genaidclean.data.remote.api.ApiService
 import com.bangkit.genaidclean.data.remote.response.Bansos
 import com.bangkit.genaidclean.data.remote.response.ResultItem
+import com.bangkit.genaidclean.data.remote.response.admin.SubmissionDetailResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
+import com.bangkit.genaidclean.data.remote.response.admin.VerifySubmissionResponse
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
 import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
@@ -141,6 +143,17 @@ class AppRepository private constructor(
         }
     }
 
+    suspend fun getDetailSubmission(id: Int): Flow<SubmissionDetailResponse> {
+        return flow {
+            try {
+                emit(apiService.getSubmissionDetail(id))
+            } catch (e: Exception) {
+                Log.d("AppRepository", "getSubmissionSummary: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun getDatabansos(): Flow<Bansos> {
         return flow {
             try {
@@ -155,6 +168,18 @@ class AppRepository private constructor(
 
     suspend fun getBansosDetail(id: Int): ResultItem{
         return getAllProfBansos().filter { it.bansosProviderId == id }.first()
+    }
+
+    suspend fun verifySubmission(userSubmissionId: Int, status: String): Flow<VerifySubmissionResponse> {
+        return flow {
+            try {
+                emit(apiService.verifySubmission(submissionId = userSubmissionId, status=status))
+            } catch (e: Exception) {
+                Log.d("AppRepository", "getSubmissionSummary: ${e.message}")
+                e.printStackTrace()
+                emit(VerifySubmissionResponse(message = "Error Verifying Submission", result = null))
+            }
+        }
     }
 
 

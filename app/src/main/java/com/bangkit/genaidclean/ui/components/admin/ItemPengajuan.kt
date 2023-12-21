@@ -47,6 +47,7 @@ import com.bangkit.genaidclean.ui.theme.yellow
 fun ItemPengajuan(
     modifier: Modifier = Modifier,
     dataSubmission: ResultItem,
+    onNavigateToDetailPengajuan: (Int) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -55,7 +56,7 @@ fun ItemPengajuan(
         ),
         modifier = modifier
             .height(120.dp)
-            .clickable { } //TODO: navigate to detail
+            .clickable {onNavigateToDetailPengajuan(dataSubmission.submissionId)}
     ) {
         Row(
             modifier = modifier
@@ -86,7 +87,7 @@ fun ItemPengajuan(
                     Text(
                         text = dataSubmission.bansosProviderName,
                         style = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             lineHeight = 8.sp,
                             fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                             color = Color(black.value),
@@ -109,7 +110,7 @@ fun ItemPengajuan(
                 Text(
                     text = dataSubmission.nik,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         lineHeight = 12.sp,
                         fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                         color = Color(black.value),
@@ -126,7 +127,7 @@ fun ItemPengajuan(
                 Text(
                     text = dataSubmission.name,
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         lineHeight = 10.sp,
                         fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                         color = Color(black.value),
@@ -138,7 +139,7 @@ fun ItemPengajuan(
                 Text(
                     text = "${dataSubmission.alamat}, ${dataSubmission.desa}, ${dataSubmission.kec}, ${dataSubmission.kab}, ${dataSubmission.prov}",
                     style = TextStyle(
-                        fontSize = 10.sp,
+                        fontSize = 12.sp,
                         lineHeight = 12.sp,
                         fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                         color = Color(black1.value),

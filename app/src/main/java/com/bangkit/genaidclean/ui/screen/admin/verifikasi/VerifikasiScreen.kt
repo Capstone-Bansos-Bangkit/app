@@ -59,6 +59,7 @@ fun VerifikasiScreen(
             Inject.provideRepository(context)
         )
     ),
+    onNavigateToDetailPengajuan: (Int) -> Unit = {},
 ) {
 
     val dataState by viewModel.state.collectAsState()
@@ -76,7 +77,8 @@ fun VerifikasiScreen(
             val data = (dataState as State.Success<SubmissionListResponse>).data
             VerifikasiScreenContent(
                 modifier = modifier,
-                data = data
+                data = data,
+                onNavigateToDetailPengajuan = onNavigateToDetailPengajuan
             )
         }
         is State.Error -> {
@@ -96,6 +98,7 @@ fun VerifikasiScreen(
 fun VerifikasiScreenContent(
     modifier: Modifier = Modifier,
     data: SubmissionListResponse,
+    onNavigateToDetailPengajuan: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -127,11 +130,12 @@ fun VerifikasiScreenContent(
                 Text(
                     text = "Jumlah Antrian",
                     style = TextStyle(
-                        fontSize = 10.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
                         color = yellow,
                         letterSpacing = 0.8.sp,
-                    )
+                    ),
+                    modifier = modifier.height(14.dp)
                 )
                 Text(
                     text = data.total.toString(),
@@ -161,8 +165,10 @@ fun VerifikasiScreenContent(
             contentPadding = PaddingValues(top = 8.dp)
         ) {
             items(data.result) {item: ResultItem ->
-                //TODO: pass the data
-                ItemPengajuan(dataSubmission = item)
+                ItemPengajuan(
+                    onNavigateToDetailPengajuan = onNavigateToDetailPengajuan,
+                    dataSubmission = item
+                )
             }
         }
     }

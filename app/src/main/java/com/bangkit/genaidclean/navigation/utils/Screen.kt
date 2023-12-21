@@ -15,11 +15,6 @@ sealed class Screen (val route: String){
         fun createRoute(id: Int) = "userHome/$id"
     }
 
-    //TODO: ERASE, NOT USED
-    data object AskPengajuan: Screen("pengajuan/{id}"){
-        fun createRoute(id: Long) = "pengajuan/$id"
-    }
-
     data object CekBansos : Screen("cekBansos")
     data object UserProfil : Screen("userProfil")
 
@@ -32,10 +27,12 @@ sealed class Screen (val route: String){
 
     // === admin route === \\
     data object AdminDashboard: Screen("adminDashboard")
+
     data object AdminVerifikasi: Screen("adminVerifikasi")
-    data object AdminDetailPengajuan: Screen("adminDetailPengajuan/{id}"){
-        fun createRoute(id: Int) = "adminDetailPengajuan/$id"
+    data object AdminDetailPengajuan: Screen("adminVerifikasi/{id}"){
+        fun createRoute(id: Int) = "adminVerifikasi/$id"
     }
+
     data object AdminBansos : Screen("adminBansos")
     data object AdminDetailBansos: Screen("adminBansos/{id}"){
         fun createRoute(id: Int) = "adminBansos/$id"

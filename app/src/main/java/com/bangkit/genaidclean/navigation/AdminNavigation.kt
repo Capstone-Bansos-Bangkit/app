@@ -23,6 +23,8 @@ import com.bangkit.genaidclean.ui.components.admin.FabFilter
 import com.bangkit.genaidclean.ui.screen.admin.bansos.BansosScreen
 import com.bangkit.genaidclean.ui.screen.admin.bansos.DetailBansos
 import com.bangkit.genaidclean.ui.screen.admin.dashboard.DashboardAdminScreen
+import com.bangkit.genaidclean.ui.screen.admin.verifikasi.DetailAjuan
+import com.bangkit.genaidclean.ui.screen.admin.verifikasi.DetailAjuanContent
 import com.bangkit.genaidclean.ui.screen.admin.verifikasi.VerifikasiScreen
 import com.bangkit.genaidclean.ui.theme.whiteBlue
 import com.bangkit.genaidclean.ui.theme.whiteBlueLight
@@ -73,7 +75,25 @@ fun AdminNavigation(
             }
 
             composable(Screen.AdminVerifikasi.route) {
-                VerifikasiScreen()
+                VerifikasiScreen(
+                    onNavigateToDetailPengajuan = { pengajuanId ->
+                        navController.navigate(Screen.AdminDetailPengajuan.createRoute(pengajuanId))
+                    }
+                )
+            }
+            composable(
+                route = Screen.AdminDetailPengajuan.route,
+                arguments = listOf(
+                    navArgument("id") { type = NavType.IntType }
+                )
+            ) {
+                val id = it.arguments?.getInt("id") ?: 0
+                DetailAjuan(
+                    submissionId = id,
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
 
             composable(Screen.AdminBansos.route) {
@@ -83,7 +103,6 @@ fun AdminNavigation(
                     }
                 )
             }
-
             composable(
                 route = Screen.AdminDetailBansos.route,
                 arguments = listOf(
@@ -99,18 +118,6 @@ fun AdminNavigation(
                 )
             }
 
-            composable(
-                route = Screen.AdminDetailPengajuan.route,
-                arguments = listOf(
-                    navArgument("id") { type = NavType.LongType }
-                )
-            ) {
-                val id = it.arguments?.getLong("id") ?: 0L
-                //TODO: buat screen detail pengajuan
-//                DetailPengajuan(
-//
-//                )
-            }
         }
     }
 }
