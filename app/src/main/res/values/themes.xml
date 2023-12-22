@@ -4,8 +4,8 @@
     <style name="Theme.GenAidClean" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.App.Splachscreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/navy</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_logo</item>
+        <item name="windowSplashScreenBackground">@color/whiteBlurLight</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logoapp</item>
         <item name="postSplashScreenTheme">@style/Theme.GenAidClean</item>
     </style>
 </resources>

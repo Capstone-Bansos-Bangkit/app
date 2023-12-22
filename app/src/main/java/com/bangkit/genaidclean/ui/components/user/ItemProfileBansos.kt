@@ -23,6 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.bangkit.genaidclean.ui.theme.black
+import com.bangkit.genaidclean.ui.theme.navy
+import com.bangkit.genaidclean.ui.theme.navyLight
+import com.bangkit.genaidclean.ui.theme.whiteBlue
+import com.bangkit.genaidclean.ui.theme.whiteBlueLight
 
 @Composable
 fun ItemProfileBansos(
@@ -35,7 +39,7 @@ fun ItemProfileBansos(
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = whiteBlue,
         ),
         modifier = modifier
             .padding(10.dp)

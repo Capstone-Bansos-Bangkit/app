@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        installSplashScreen()
+        installSplashScreen()
         viewModel.getSession().observe(this){userModel ->
             if (userModel.token == ""){
                 val intentAuth = Intent(this, AuthActivity::class.java)
