@@ -52,7 +52,7 @@ fun BottomBarAdmin(
     if (showAlert) {
         CustomAlertDialog(
             onDismiss = { showAlert = false },
-            onConfirm = { actionLogOut() },
+            onConfirm = { actionLogOut(); showAlert = false },
             titleDialog = "Logout",
             msgDialog = "Apakah anda yakin ingin keluar?",
         )

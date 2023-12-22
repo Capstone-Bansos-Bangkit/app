@@ -295,14 +295,14 @@ fun DetailAjuanContent(
         if (show && status == "tolak") {
             CustomAlertDialog(
                 onDismiss = { show = false },
-                onConfirm = { updateSubmissionStatus(idSubmission, "rejected") },
+                onConfirm = { show  = false; updateSubmissionStatus(idSubmission, "rejected") },
                 titleDialog = "Tolak Ajuan",
                 msgDialog = "Apakah anda yakin ingin menolak ajuan ini?",
             )
         } else if ( show && status == "approved") {
             CustomAlertDialog(
                 onDismiss = { show = false },
-                onConfirm = { updateSubmissionStatus(idSubmission, "approved") },
+                onConfirm = { show  = false; updateSubmissionStatus(idSubmission, "approved") },
                 titleDialog = "Verifikasi Ajuan",
                 msgDialog = "Apakah anda yakin ingin menyetujui ajuan ini?",
             )

@@ -8,4 +8,5 @@
     <string name="desc_bansos">Sistem baru penyaluran bantuan pangan ini diatur dalam Peraturan Presiden Nomor 63 Tahun 2017 tentang Penyaluran Bantuan Sosial Secara Non Tunai. Bantuan sosial non tunai diberikan dalam rangka program penanggulangan kemiskinan yang meliputi perlindungan sosial, jaminan sosial, pemberdayaan sosial, rehabilitasi sosial, dan pelayanan dasar. Program ini juga diharapkan dapat mempermudah masyarakat untuk menjangkau layanan keuangan formal di perbankan, sehingga mempercepat program keuangan inklusif.</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_admin">AdminActivity</string>
+    <string name="image_placeholder_link"><![CDATA[https://th.bing.com/th/id/OIP.BkoXurD30qD41Q4pDKvDAAHaGH?rs=1&pid=ImgDetMain]]></string>
 </resources>

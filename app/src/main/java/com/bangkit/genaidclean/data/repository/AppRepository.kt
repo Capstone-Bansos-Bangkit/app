@@ -17,6 +17,8 @@ import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
 import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusListItem
+import com.bangkit.genaidclean.data.remote.response.user.UpdateProfileResponse
+import com.bangkit.genaidclean.data.remote.response.user.UpdateProfileResult
 import com.bangkit.genaidclean.data.remote.response.user.UserProfileResponse
 import com.bangkit.genaidclean.utils.State
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +61,19 @@ class AppRepository private constructor(
             emit(State.Error(e.message))
         }
     }.flowOn(Dispatchers.IO)
+
+    fun loginDev() : Flow<State<UserModel>> {
+        return flow {
+            try {
+                val response = apiService.loginDevUser()
+                val userData = response.result.toUserModel()
+                emit(State.Success(userData))
+            } catch (e: Exception) {
+                Log.d("AppRepository", "Login dev: ${e.message}")
+                emit(State.Error(e.message))
+            }
+        }
+    }
 
 
     suspend fun saveSession(user: UserModel) {
@@ -106,6 +121,27 @@ class AppRepository private constructor(
         return apiService.getQuestions()
     }
 
+    suspend fun updateEmail(email: String) : Flow<UpdateProfileResponse> {
+        return flow {
+            try {
+                emit(apiService.updateEmail(email))
+            } catch (e: Exception) {
+                Log.d("AppRepository", "update: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    suspend fun updatePhone(phone: String) : Flow<UpdateProfileResponse> {
+        return flow {
+            try {
+                emit(apiService.updatePhone(phone))
+            } catch (e: Exception) {
+                Log.d("AppRepository", "update: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+    }
 
 
     // === === === === === ===  ADMIN === === === === === \\
@@ -131,10 +167,10 @@ class AppRepository private constructor(
         }
     }
 
-    fun getPendingSubmissionList(): Flow<SubmissionListResponse> {
+    fun getPendingSubmissionList(bansosId: Int?): Flow<SubmissionListResponse> {
         return flow {
             try {
-                emit(apiService.getPendingSubmissionList())
+                emit(apiService.getPendingSubmissionList(bansosId))
             } catch (e: Exception) {
                 Log.d("AppRepository", "getSubmissionSummary: ${e.message}")
                 e.printStackTrace()

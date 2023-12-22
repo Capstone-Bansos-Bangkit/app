@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -48,6 +49,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.data.di.Inject
+import com.bangkit.genaidclean.navigation.utils.Screen
 import com.bangkit.genaidclean.ui.ViewModelFactory
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileViewModel
 import com.bangkit.genaidclean.ui.theme.black
@@ -85,10 +87,13 @@ fun ImageAdd(
             viewModel.getUserProfile()
             viewModel.userProfile.value.let {
                 if (it != null) {
-                    val profilePicUrl = viewModel.userProfile.value?.result?.profilePicUrl?.toString()
+                    val profilePicUrl = viewModel.userProfile.value?.result?.profilePicUrl ?: stringResource(
+                        R.string.image_placeholder_link
+                    )
                     AsyncImage(
                         model = profilePicUrl,
                         contentDescription = null,
+                        placeholder = painterResource(id = R.drawable.iv_profile_placeholder),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .clip(CircleShape)
@@ -98,26 +103,25 @@ fun ImageAdd(
                                 width = 1.dp,
                                 color = Color.White,
                                 shape = CircleShape
-                            )
-                    )
-
-
-                }else{
-                    Image(
-                        bitmap = bitmap.value.asImageBitmap(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(150.dp)
-                            .background(Color.Gray)
-                            .border(
-                                width = 1.dp,
-                                color = Color.White,
-                                shape = CircleShape
-                            )
+                            ),
                     )
                 }
+//                else{
+//                    Image(
+//                        bitmap = bitmap.value.asImageBitmap(),
+//                        contentDescription = null,
+//                        contentScale = ContentScale.Crop,
+//                        modifier = Modifier
+//                            .clip(CircleShape)
+//                            .size(150.dp)
+//                            .background(Color.Gray)
+//                            .border(
+//                                width = 1.dp,
+//                                color = Color.White,
+//                                shape = CircleShape
+//                            )
+//                    )
+//                }
             }
 
 
@@ -289,13 +293,14 @@ fun Email(
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    IconButton(onClick = { } ) {
+                    IconButton(onClick = {
+                        navController.navigate(Screen.UpdateEmail.route)
+                    } ) {
                         Icon(
                             imageVector = Icons.Outlined.Edit,
                             contentDescription = null,
                             modifier.size(20.dp),
                             colorResource(id = R.color.black)
-
                         )
 
                     }
@@ -310,10 +315,7 @@ fun Email(
                         modifier = modifier.padding(bottom = 8.dp)
                     )
                 }
-
             }
-
-
         }
     }
 }
@@ -352,17 +354,16 @@ fun NoTlp(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { } ) {
+                IconButton(onClick = {
+                    navController.navigate(Screen.UpdatePhone.route)
+                } ) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,
                         modifier.size(20.dp),
                         colorResource(id = R.color.black)
-
                     )
-
                 }
-
             }
 
             viewModel.getUserProfile()
@@ -377,8 +378,6 @@ fun NoTlp(
                     )
                 }
             }
-
-
         }
     }
 }

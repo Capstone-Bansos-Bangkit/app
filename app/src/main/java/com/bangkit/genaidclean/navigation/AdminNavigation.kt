@@ -58,11 +58,11 @@ fun AdminNavigation(
                 )
             }
         },
-//        floatingActionButton = {
-//            if (currentRoute == Screen.AdminVerifikasi.route) {
-//                FabFilter()
-//            }
-//        },
+        floatingActionButton = {
+            if (currentRoute == Screen.AdminVerifikasi.route) {
+                FabFilter()
+            }
+        },
         containerColor = containerColor,
     ) { innerPadding ->
         NavHost(
@@ -91,7 +91,7 @@ fun AdminNavigation(
                 DetailAjuan(
                     submissionId = id,
                     onNavigateBack = {
-                        navController.navigateUp()
+                        navController.popBackStack(Screen.AdminVerifikasi.route, inclusive = false)
                     },
                 )
             }

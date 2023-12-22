@@ -22,6 +22,8 @@ import com.bangkit.genaidclean.ui.screen.user.detailbansos.UserDetailBansosScree
 import com.bangkit.genaidclean.ui.screen.user.home.UserHomeScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.AskPengajuanScreen
 import com.bangkit.genaidclean.ui.screen.user.pengajuan.UserPengajuanScreen
+import com.bangkit.genaidclean.ui.screen.user.profile.PhoneUpdateScreen
+import com.bangkit.genaidclean.ui.screen.user.profile.UpdateEmail
 import com.bangkit.genaidclean.ui.screen.user.profile.UserProfileScreen
 import com.bangkit.genaidclean.ui.screen.user.question.Question
 import com.bangkit.genaidclean.ui.theme.whiteBlue
@@ -111,6 +113,14 @@ fun UserNavigation(
             }
             composable(Screen.UserProfil.route) {
                 UserProfileScreen(navController,context)
+            }
+
+            composable(Screen.UpdateEmail.route){
+                UpdateEmail(navController = navController)
+            }
+
+            composable(Screen.UpdatePhone.route){
+                PhoneUpdateScreen(navController = navController)
             }
 
         }
