@@ -315,9 +315,9 @@ fun UserLogin(
         ) {
             Button(
                 onClick = {
-                    viewModel.loginDev()
+//                    viewModel.loginDev()
                     //TODO: THIS IS SUDO, CHANGE WHEN U WANT TO DEPLOY IT
-//                    viewModel.loginUser(nik, motherName, birthDate)
+                    viewModel.loginUser(nik, motherName, birthDate)
                 },
                 modifier = modifier
                     .fillMaxWidth(),

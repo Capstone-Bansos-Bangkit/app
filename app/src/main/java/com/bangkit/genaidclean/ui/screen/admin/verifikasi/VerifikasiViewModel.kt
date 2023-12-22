@@ -24,10 +24,10 @@ class VerifikasiViewModel (private val repo: AppRepository): ViewModel() {
     val verifSubmis = _verifSubmis.asStateFlow()
 
 
-    fun fetchData() {
+    fun fetchData(bansosId: Int? = null) {
         viewModelScope.launch {
             try {
-                repo.getPendingSubmissionList()
+                repo.getPendingSubmissionList(bansosId = bansosId)
                     .catch {
                         _state.value = State.Error(it.message)
                     }

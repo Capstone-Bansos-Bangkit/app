@@ -44,6 +44,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,6 +67,7 @@ import com.bangkit.genaidclean.navigation.utils.Screen
 import com.bangkit.genaidclean.data.remote.response.user.ResultItem as QuestionItem
 import com.bangkit.genaidclean.data.remote.response.ResultItem as BansosResult
 import com.bangkit.genaidclean.ui.ViewModelFactory
+import com.bangkit.genaidclean.ui.components.AlertAutoClose
 import com.bangkit.genaidclean.ui.theme.black1
 import com.bangkit.genaidclean.ui.theme.navy
 import com.bangkit.genaidclean.ui.theme.whiteBlue
@@ -156,7 +158,7 @@ fun ContentQuestion (
                 fontSize = 14.sp,
                 modifier = Modifier.padding(bottom = 5.dp)
             )
-            QuostionScreen(context = context)
+            QuostionScreen(context = context, navController = navController)
 //            BtnSubmitTaks(navController = navController)
         }
 
@@ -166,7 +168,7 @@ fun ContentQuestion (
 
 
 @Composable
-fun QuostionScreen(context: Context) {
+fun QuostionScreen(context: Context, navController: NavHostController) {
 
     val viewModel: QuestionViewModel = viewModel(
         factory = ViewModelFactory(
@@ -179,14 +181,26 @@ fun QuostionScreen(context: Context) {
         viewModel.getQuestions()
     }
 
+    var sucsess by rememberSaveable { mutableStateOf(false) }
+
     // Replace "YourComposable" with the actual composable you want to display
     QuestionLazy(
         results = viewModel.questionResponse.value?.result ?: emptyList(),
         onSaveButtonClick = {
             // Handle save button click
             // You may want to save the answers or perform other actions
+            //viewModel.saveAnswers
+            //TODO: Save answers
+            navController.popBackStack(Screen.UserPengajuan.route, inclusive = false)
+            sucsess = true
         }
     )
+
+    if (sucsess){
+        AlertAutoClose(msg="Berhasil")
+    }
+
+
 }
 
 
@@ -241,13 +255,13 @@ fun QuestionItem(
 
             when (resultItem.type) {
                 "choice" -> {
-                    Options(resultItem.options ?: emptyList())
+                    Options(resultItem.options ?: emptyList(), resultItem.id ?: "")
                 }
                 "continuous" -> {
-                    ContinuousOptions()
+                    ContinuousOptions(resultItem.id ?: "")
                 }
                 "image" -> {
-                    ImageQuestion()
+                    ImageQuestion(resultItem.id ?: "")
                 }
                 // Add more cases if needed for other types
             }
@@ -260,8 +274,12 @@ fun QuestionItem(
 
 
 @Composable
-fun Options(options: List<OptionsItem?>) {
-    var selectedOption by remember { mutableStateOf<OptionsItem?>(null) }
+fun Options(
+    options: List<OptionsItem?>,
+    id: String
+) {
+    var selectedOption by remember{ mutableStateOf<OptionsItem?>(null) }
+//    var ListAnswer = mutableList()
 
     Column {
         options.forEach { option ->
@@ -278,6 +296,7 @@ fun Options(options: List<OptionsItem?>) {
                         selected = option == selectedOption,
                         onClick = {
                             selectedOption = option
+
                         }
                     )
                     Text(text = option.alias ?: "", color = black1)
@@ -288,7 +307,9 @@ fun Options(options: List<OptionsItem?>) {
 }
 
 @Composable
-fun ContinuousOptions() {
+fun ContinuousOptions(
+    id: String
+) {
     var inputValue by remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -315,7 +336,7 @@ fun ContinuousOptions() {
 }
 
 @Composable
-fun ImageQuestion() {
+fun ImageQuestion(id: String) {
     Box {
 
         val img: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.ic_menu_report_image)

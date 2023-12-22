@@ -7,6 +7,8 @@ import com.bangkit.genaidclean.data.remote.response.admin.SubmissionListResponse
 import com.bangkit.genaidclean.data.remote.response.admin.SubmissionSummaryResponse
 import com.bangkit.genaidclean.data.remote.response.admin.VerifySubmissionResponse
 import com.bangkit.genaidclean.data.remote.response.login.LoginResponse
+import com.bangkit.genaidclean.data.remote.response.user.PostQuestionAnswerResponse
+import com.bangkit.genaidclean.data.remote.response.user.PostSubmissionResponse
 import com.bangkit.genaidclean.data.remote.response.user.QuestionResponse
 import com.bangkit.genaidclean.data.remote.response.user.StatusBansosResponse
 import com.bangkit.genaidclean.data.remote.response.user.UpdateProfileResponse
@@ -68,6 +70,18 @@ interface ApiService {
         @Query("phone_number") phoneNumber: String
     ):UpdateProfileResponse
 
+    @PUT("submission/answer")
+    suspend fun submitAnswer(
+        @Query("submission_id")submissionId: Int,
+        @Query("question_id")questionId: Int,
+        @Query("answer")answer: String,
+    ):PostQuestionAnswerResponse
+
+    @PUT("submission/submit")
+    suspend fun submitSubmission(
+        @Query("submission_id")submissionId: Int
+    ):PostSubmissionResponse
+
 
 
     //ADMIN
@@ -83,6 +97,7 @@ interface ApiService {
 
     @GET("admin/submission/list")
     suspend fun getPendingSubmissionList(
+        @Query("bansos_provider_id") bansosId: Int? = null,
         @Query("status")status: String = "pending",
         @Query("limit")limit: Int = 50
     ): SubmissionListResponse

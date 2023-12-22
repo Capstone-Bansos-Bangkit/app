@@ -167,10 +167,10 @@ class AppRepository private constructor(
         }
     }
 
-    fun getPendingSubmissionList(): Flow<SubmissionListResponse> {
+    fun getPendingSubmissionList(bansosId: Int?): Flow<SubmissionListResponse> {
         return flow {
             try {
-                emit(apiService.getPendingSubmissionList())
+                emit(apiService.getPendingSubmissionList(bansosId))
             } catch (e: Exception) {
                 Log.d("AppRepository", "getSubmissionSummary: ${e.message}")
                 e.printStackTrace()

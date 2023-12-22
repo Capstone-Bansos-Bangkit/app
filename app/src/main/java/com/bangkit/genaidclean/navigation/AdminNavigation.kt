@@ -58,11 +58,11 @@ fun AdminNavigation(
                 )
             }
         },
-//        floatingActionButton = {
-//            if (currentRoute == Screen.AdminVerifikasi.route) {
-//                FabFilter()
-//            }
-//        },
+        floatingActionButton = {
+            if (currentRoute == Screen.AdminVerifikasi.route) {
+                FabFilter()
+            }
+        },
         containerColor = containerColor,
     ) { innerPadding ->
         NavHost(
