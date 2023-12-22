@@ -57,7 +57,7 @@ fun UserHomeScreen(
             viewModel.userProfile.value.let {
                 if (it != null) {
                     Text(
-                        text = "Welcome, ${it.result?.name}",
+                        text = "Halo, ${it.result?.name}",
                         fontSize = 25.sp,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -80,7 +80,7 @@ fun UserHomeScreen(
             )
             Text(
                 text = "Berikut adalah Jenis-jenis Bantuan Sosial yang dapat di dapatkan",
-                fontSize = 12.sp,
+                fontSize = 14.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),

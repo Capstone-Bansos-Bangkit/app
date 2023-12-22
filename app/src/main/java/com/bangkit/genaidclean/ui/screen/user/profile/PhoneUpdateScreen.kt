@@ -162,7 +162,7 @@ fun PhoneUpdateScreen(
         ) {
             Spacer(modifier = Modifier.padding(top = 4.dp))
             Text(
-                text = "Email",
+                text = "Nomor Telepon",
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
                 color = navy,

@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import com.bangkit.genaidclean.navigation.AuthNavigation
 import com.bangkit.genaidclean.ui.ViewModelFactory
 import com.bangkit.genaidclean.ui.theme.GenAidCleanTheme
+import com.bangkit.genaidclean.ui.theme.whiteBlue
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class AuthActivity : ComponentActivity() {
     val context = this
@@ -43,6 +45,11 @@ class AuthActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    rememberSystemUiController().apply {
+                        setSystemBarsColor(
+                            color = whiteBlue
+                        )
+                    }
                     AuthNavigation(context = this)
                 }
             }

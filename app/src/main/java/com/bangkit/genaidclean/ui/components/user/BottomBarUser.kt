@@ -26,7 +26,9 @@ import com.bangkit.genaidclean.R
 import com.bangkit.genaidclean.navigation.utils.NavigationItem
 import com.bangkit.genaidclean.navigation.utils.Screen
 import com.bangkit.genaidclean.ui.theme.black1
+import com.bangkit.genaidclean.ui.theme.grey
 import com.bangkit.genaidclean.ui.theme.navy
+import com.bangkit.genaidclean.ui.theme.white
 
 
 @Composable
@@ -39,7 +41,9 @@ fun BottomBarUser(
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
-        modifier = modifier
+        modifier = modifier,
+        containerColor = white,
+
     ) {
         val navigationItems = listOf(
             NavigationItem(
@@ -80,9 +84,9 @@ fun BottomBarUser(
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = navy,
                     selectedTextColor = navy,
-                    unselectedIconColor = black1,
-                    unselectedTextColor = black1,
-                    indicatorColor = Color.Transparent,
+                    unselectedIconColor = grey,
+                    unselectedTextColor = grey,
+                    indicatorColor = Color.White,
                 ),
                 selected = currentRoute == item.screen.route,
                 onClick = {
